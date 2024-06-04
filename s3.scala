@@ -26,6 +26,7 @@ var df1 = spark.read.format("com.crealytics.spark.excel")
         .mode("overwrite").save()
 
 		var q = """
+		INSERT INTO tasketl3b 
 		SELECT fieldname, GROUP_CONCAT(DISTINCT fieldvalue ORDER BY fieldvalue  SEPARATOR ', ') AS 'fieldvalue'
 		FROM tasketl3a
 		GROUP BY fieldname;
@@ -49,7 +50,7 @@ var df1 = spark.read.format("com.crealytics.spark.excel")
 		sqlexecute(q)
 
 		spark.read.format("jdbc").option("url","jdbc:mysql://localhost:3306/spark?user=is_max&password=")
-        .option("driver", "com.mysql.cj.jdbc.Driver").option("dbtable", "tasketl3a")
+        .option("driver", "com.mysql.cj.jdbc.Driver").option("query", q)
         
 		.write.format("jdbc").option("url","jdbc:mysql://localhost:3306/spark?user=is_max&password=")
         .option("driver", "com.mysql.cj.jdbc.Driver").option("dbtable", "tasketl3a")
