@@ -31,7 +31,7 @@ var df1 = spark.read.format("com.crealytics.spark.excel")
 		FROM tasketl3a
 		GROUP BY fieldname;
 		"""
-		
+		/*
 		import java.sql._;
 		def sqlexecute(sql: String) = {
 			var conn: Connection = null;
@@ -46,16 +46,16 @@ var df1 = spark.read.format("com.crealytics.spark.excel")
 				case e: Exception => println("exception caught: "+ e);
 			}
 		}
-		sqlexecute("drop table spark.tasketl3b")
-		sqlexecute(q)
+		//sqlexecute("drop table spark.tasketl3b")
+		sqlexecute(q)*/
 
 		spark.read.format("jdbc").option("url","jdbc:mysql://localhost:3306/spark?user=is_max&password=")
         .option("driver", "com.mysql.cj.jdbc.Driver").option("query", q)
         
-		.write.format("jdbc").option("url","jdbc:mysql://localhost:3306/spark?user=is_max&password=")
+		/*.write.format("jdbc").option("url","jdbc:mysql://localhost:3306/spark?user=is_max&password=")
         .option("driver", "com.mysql.cj.jdbc.Driver").option("dbtable", "tasketl3a")
-        .mode("overwrite").save()
-	println("task 3")
+        .mode("overwrite").save()*/
+	println("task 3 ended")
 }
 val s0 = (System.currentTimeMillis() - t1)/1000
 val s = s0 % 60
